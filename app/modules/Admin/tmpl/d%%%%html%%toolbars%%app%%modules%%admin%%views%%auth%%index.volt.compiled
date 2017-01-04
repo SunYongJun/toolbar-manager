@@ -1,0 +1,164 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>无标题文档</title>
+    <?php echo $this->assets->outputCss(); ?>
+    <?php echo $this->assets->outputJs(); ?>
+    <style>
+    th{
+        min-width: 80px;
+    }
+    .rules{
+        float: left;
+        width:148px;
+    }
+    </style>
+
+</head>
+
+<body>
+
+    <div class="place">
+        <span>位置：</span>
+        <ul class="placeul">
+            <li>
+                <a href="#">首页</a>
+            </li>
+            <li>
+                <a href="#">数据表</a>
+            </li>
+            <li>
+                <a href="#">基本内容</a>
+            </li>
+        </ul>
+    </div>
+
+    <div class="rightinfo">
+
+        <div class="tools">
+
+            <ul class="toolbar">
+                <li>
+                    <a href="<?php echo $this->url->get('auth/groupadd'); ?>" class="veri">
+                        <span><?php echo $this->tag->image(array('images/t01.png')); ?></span>
+                        　添　加　
+                    </a>
+                </li>
+
+                <li>
+                    <a href="javascript:;" class="veri" id="delall">
+                    <span><?php echo $this->tag->image(array('images/t03.png')); ?></span>
+                    　删　除　
+                    </a>
+                </li>
+                
+            </ul>
+
+        </div>
+
+        <table class="tablelist">
+            <thead>
+                <tr>
+                    <th style="width:40px;min-width:20px;">
+                        <label class="uniform">
+                            <input class="uniform_on" type="checkbox" id="allcheck">
+                        </label>
+                    </th>
+                    <th style="width:47px;min-width:30px;">编号</th>
+                    <th>名称</th>
+                    <th>权限</th>
+                    <th>操作</th>
+                </tr>
+            </thead>
+            <tbody>
+                <?php foreach ($groups->items as $v) { ?>
+                <tr>
+                    <td>
+                        <label class="uniform">
+                            <input class="uniform_on ids" type="checkbox" name="ids[]" value="<?php echo $v->id; ?>">
+                        </label>
+                    </td>
+                    <td><?php echo $v->id; ?></td>
+                    <td>
+                       <?php echo $v->title; ?>
+                    </td>
+
+                    <td>
+                    <?php $num = 1; ?>
+                       <?php foreach ($v->getRules() as $rule) { ?>
+                        <div class="rules">
+                            <?php echo $num; ?>.<?php echo $rule->title; ?><?php $num = $num + 1; ?>
+                        </div>
+                            
+                       <?php } ?>
+                    </td>
+                    <td>
+                        <a href="<?php echo $this->url->get('auth/groupedit'); ?>?id=<?php echo $v->id; ?>">修改</a>
+                        |
+                        <a href="<?php echo $this->url->get('auth/groupdel'); ?>?id=<?php echo $v->id; ?>">删除</a>
+                        
+                    </td>
+
+                </tr>
+                <?php } ?>
+            </tbody>
+        </table>
+
+        <?php if ($groups->total_pages > 1) { ?>
+            <div class="pagin">
+                <div class="message">
+                    共 <i class="blue"><?php echo $groups->total_items; ?></i>
+                    条记录，当前显示第&nbsp; <i class="blue"><?php echo $groups->current; ?>&nbsp;</i>
+                    页
+                </div>
+                <ul class="paginList">
+                    <li class="paginItem">
+                        <a href="<?php echo $param; ?>page=<?php echo $groups->before; ?>">
+                            <span class="pagepre"></span>
+                        </a>
+                    </li>
+                    <?php foreach (range(1, $groups->total_pages) as $index) { ?>
+                    <li class="paginItem">
+                        <a href="<?php echo $param; ?>page=<?php echo $index; ?>"><?php echo $index; ?></a>
+                    </li>
+                    <?php } ?>
+                   
+                    <li class="paginItem">
+                        <a href="<?php echo $param; ?>page=<?php echo $groups->next; ?>">
+                            <span class="pagenxt"></span>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+            <?php } ?>        
+
+    <script type="text/javascript">$('.tablelist tbody tr:odd').addClass('odd');</script>
+    <script>
+        $(function(){
+            var allcheck = document.getElementById('allcheck');
+            var ids = document.getElementsByName('ids[]');
+
+            allcheck.onclick = function(){            
+                for(var i = 0 ; i < ids.length ; i++){
+                    ids[i].checked = allcheck.checked;
+                }
+            }
+
+            $('#delall').click(function(){
+                var ruleIds = [];
+                $('.ids:checked').each(function(){
+                    ruleIds.push($(this).val());
+                })
+                $.post('<?php echo $this->url->get('auth/groupDelAll'); ?>',{ids:ruleIds},function(data){
+                    if(data){
+                        window.location.reload();
+                    }
+                })
+            })
+
+        })
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,120 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>无标题文档</title>
+    <?php echo $this->assets->outputCss(); ?>
+    <?php echo $this->tag->javascriptInclude('js/jquery-2.0.3.min.js'); ?>
+    <style>
+    .tablelist span{
+        display:inline;
+    }
+    th{
+        min-width: 50px;
+    }
+    </style>
+
+</head>
+
+<body>
+
+    <div class="place">
+        <span>位置：</span>
+        <ul class="placeul">
+            <li>
+                <a href="#">首页</a>
+            </li>
+            <li>
+                <a href="#">数据表</a>
+            </li>
+            <li>
+                <a href="#">基本内容</a>
+            </li>
+        </ul>
+    </div>
+
+    <div class="rightinfo">
+
+        <div class="tools">
+
+            <ul class="toolbar">
+                <li>
+                    <a href="javascript:;" class="veri" value="1">
+                        <span><?php echo $this->tag->image(array('images/t01.png')); ?></span>
+                        　通　过　
+                    </a>
+                </li>
+
+                <li>
+                    <a href="javascript:;" class="veri" value="4">
+                    <span><?php echo $this->tag->image(array('images/t03.png')); ?></span>
+                    　否　决　
+                    </a>
+                </li>
+                
+            </ul>
+
+        </div>
+        <?php echo $this->tag->form(array('verify/exec', 'id' => 'vrf')); ?>
+        <table class="tablelist">
+            <thead>
+                <tr>
+                    <th>
+                        <label class="uniform">
+                            <input class="uniform_on" type="checkbox" id="allcheck"></label>
+                    </th>
+                    <th style="min-width:60px;">频道</th>
+                    <th>标题</th>
+                    <th>logo</th>
+                    <th>内容</th>
+                    <th>url</th>
+                    <th style="min-width:70px;">操作</th>
+                </tr>
+            </thead>
+            <tbody>
+                <?php foreach ($result as $v) { ?>
+                <tr>
+                    <td>
+                        <label class="uniform">
+                            <input class="uniform_on ids" type="checkbox" name="ids[]" value="<?php echo $v->id; ?>"></label>
+                    </td>
+                    <td><?php echo $v->getNav()->name; ?></td>
+                    <td><?php echo $v->title; ?></td>
+                    <td>
+                        <img src="<?php echo $this->url->get($v->logo); ?>" style="max-height:50px;" alt="logo"></td>
+                    <td><?php echo $v->contents; ?></td>
+                    <td>
+                        <a href="<?php echo $v->url; ?>" target="_blank"><?php echo $v->url; ?></a>
+                    </td>
+
+                    <td>
+                        <a href="<?php echo $this->url->get('verify/exec'); ?>?id=<?php echo $v->id; ?>&status=1">通过</a>
+                        |
+                        <a href="<?php echo $this->url->get('verify/exec'); ?>?id=<?php echo $v->id; ?>&status=4">否决 </a>
+                    </td>
+                </tr>
+                <?php } ?>
+            </tbody>
+        </table>
+    </form>
+    <script type="text/javascript">$('.tablelist tbody tr:odd').addClass('odd');</script>
+    <script>
+        $(function(){
+            var checked = true;
+            $("#allcheck").bind('click',function(){
+                $(".ids").prop('checked',checked);
+                checked = !checked;
+            })
+
+            $(".veri").bind('click',function(){
+                $("#vrf").attr('action',$("#vrf").attr('action')+'?status='+$(this).attr('value'));
+                if($('.ids:checked').length){
+                    $("#vrf").submit();
+                }
+                
+            })
+        })
+    </script>
+</body>
+
+</html>

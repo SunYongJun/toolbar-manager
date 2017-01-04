@@ -1,0 +1,320 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>无标题文档</title>
+    <?php echo $this->assets->outputCss(); ?>
+    <?php echo $this->tag->javascriptInclude('js/jquery-2.0.3.min.js'); ?>
+    <style>
+    .tablelist span{
+        display:inline;
+    }
+    th{
+        min-width: 60px;
+    }
+    </style>
+
+</head>
+
+<body>
+
+    <div class="place">
+        <span>位置：</span>
+        <ul class="placeul">
+            <li>
+                <a href="#">首页</a>
+            </li>
+            <li>
+                <a href="#">数据表</a>
+            </li>
+            <li>
+                <a href="#">基本内容</a>
+            </li>
+        </ul>
+    </div>
+
+    <div class="rightinfo">
+
+        <div class="tools">
+
+            <ul class="toolbar">
+                <li>
+                    <a href="<?php echo $this->url->get('content/add'); ?>?nid=<?php echo $channel->id; ?>">
+                        <span><?php echo $this->tag->image(array('images/t01.png')); ?></span>
+                        添加
+                    </a>
+                </li>
+
+                <li id="delALL">
+                    <span><?php echo $this->tag->image(array('images/t03.png')); ?></span>
+                    删除
+                </li>
+
+            </ul>
+
+        </div>
+
+        <table class="tablelist">
+            <?php if ($channel->tmpl == 0) { ?>
+            <thead>
+                <tr>
+                    <th>
+                        <input name="" type="checkbox" value=""  id="allcheck"/>
+                    </th>
+                    <th>编号</th>
+                    <th>标题</th>
+                    <th>内容</th>
+                    <th>按钮</th>
+                    <th>URL</th>
+                    <th>地域</th>
+                    <th>排序</th>
+                    <th>状态</th>
+                    <th>操作</th>
+                </tr>
+            </thead>
+            <tbody>
+                <?php foreach ($page->items as $v) { ?>
+                
+                <tr>
+                    <td>
+                        <input name="ids[]" class="ids"  type="checkbox" value="<?php echo $v->id; ?>" />
+                    </td>
+                    <td><?php echo $v->id; ?></td>
+                    <td><?php echo $v->title; ?></td>
+                    <td><?php echo $v->contents; ?></td>
+                    <td><?php echo $v->linkname; ?></td>
+                    <td>
+                        <a href="<?php echo $v->url; ?>" target="_blank"><?php echo $v->url; ?></a>
+                    </td>
+                    <td><?php echo $v->getCities()->city; ?></td>
+                    <td><?php echo $v->ord; ?></td>
+                    <td><?php echo $status[$v->status]; ?></td>
+                    <td>
+                        <a href="<?php echo $this->url->get('content/edit'); ?>?id=<?php echo $v->id; ?>">修改</a>
+                        |
+                        <a href="<?php echo $this->url->get('content/del'); ?>?id=<?php echo $v->id; ?>&nid=<?php echo $v->nid; ?>">删除</a>
+                    </td>
+                </tr>
+                <?php } ?>
+            <?php } elseif ($channel->tmpl == 1) { ?>
+                <thead>
+                    <tr>
+                    <th>
+                        <input name="" type="checkbox" value=""  id="allcheck"/>
+                    </th>
+                        <th>编号</th>
+                        <th>标题</th>
+                        <th>内容</th>
+                        <th>按钮</th>
+                        <th>URL</th>
+                        <th>地域</th>
+                        <th>排序</th>
+                        <th>状态</th>
+                        <th>操作</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <?php foreach ($page->items as $v) { ?>
+                    
+                    <tr>
+                        <td>
+                            <input name="ids[]" class="ids"  type="checkbox" value="<?php echo $v->id; ?>" />
+                        </td>
+                        <td><?php echo $v->id; ?></td>
+                        <td><?php echo $v->title; ?></td>
+                        <td><?php echo $v->contents; ?></td>
+                        <td><?php echo $v->linkname; ?></td>
+                        <td>
+                            <a href="<?php echo $v->url; ?>" target="_blank"><?php echo $v->url; ?></a>
+                        </td>
+                        <td><?php echo $v->getCities()->city; ?></td>
+                        <td><?php echo $v->ord; ?></td>
+                        <td><?php echo $status[$v->status]; ?></td>
+                        <td>
+                            <a href="<?php echo $this->url->get('content/edit'); ?>?id=<?php echo $v->id; ?>">修改</a>
+                            |
+                            <a href="<?php echo $this->url->get('content/del'); ?>?id=<?php echo $v->id; ?>&nid=<?php echo $v->nid; ?>">删除</a>
+                        </td>
+                    </tr>
+                    <?php } ?>
+                </tbody>
+                <?php } elseif ($channel->tmpl == 2) { ?>
+                <thead>
+                    <tr>
+                    <th>
+                        <input name="" type="checkbox" value=""  id="allcheck"/>
+                    </th>
+                        <th>编号</th>
+                        <th>logo</th>
+                        <th>名称</th>
+                        <th>URL</th>
+                        <th>地域</th>
+                        <th>排序</th>
+                        <th>状态</th>
+                        <th>操作</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <?php foreach ($page->items as $v) { ?>
+                    
+                    <tr>
+                        <td>
+                            <input name="ids[]" class="ids"  type="checkbox" value="<?php echo $v->id; ?>" />
+                        </td>
+                        <td><?php echo $v->id; ?></td>
+                        <td>
+                            <img src="<?php echo $this->url->get($v->logo); ?>" style="max-height:45px;"></td>
+                        <td><?php echo $v->title; ?></td>
+                        <td>
+                            <a href="<?php echo $v->url; ?>" target="_blank"><?php echo $v->url; ?></a>
+                        </td>
+                        <td><?php echo $v->getCities()->city; ?></td>
+                        <td><?php echo $v->ord; ?></td>
+                        <td><?php echo $status[$v->status]; ?></td>
+                        <td>
+                            <a href="<?php echo $this->url->get('content/edit'); ?>?id=<?php echo $v->id; ?>">修改</a>
+                            |
+                            <a href="<?php echo $this->url->get('content/del'); ?>?id=<?php echo $v->id; ?>&nid=<?php echo $v->nid; ?>">删除</a>
+                        </td>
+                    </tr>
+                    <?php } ?>
+                </tbody>
+                <?php } elseif ($channel->tmpl == 3) { ?>
+                <thead>
+                    <tr>
+                    <th>
+                        <input name="" type="checkbox" value=""  id="allcheck"/>
+                    </th>
+                        <th>编号</th>
+                        <th>名称</th>
+                        <th>图片</th>
+                        <th>URL</th>
+                        <th>地域</th>
+                        <th>排序</th>
+                        <th>状态</th>
+                        <th>操作</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <?php foreach ($page->items as $v) { ?>
+                    
+                    <tr>
+                        <td>
+                            <input name="ids[]" class="ids"  type="checkbox" value="<?php echo $v->id; ?>" />
+                        </td>
+                        <td><?php echo $v->id; ?></td>
+                        <td><?php echo $v->title; ?></td>
+                        <td>
+                            <img src="<?php echo $this->url->get($v->logo); ?>" style="max-height:45px;">
+                        </td>
+                        <td>
+                            <a href="<?php echo $v->url; ?>" target="_blank"><?php echo $v->url; ?></a>
+                        </td>
+                        <td><?php echo $v->getCities()->city; ?></td>
+                        <td><?php echo $v->ord; ?></td>
+                        <td><?php echo $status[$v->status]; ?></td>
+                        <td>
+                            <a href="<?php echo $this->url->get('content/edit'); ?>?id=<?php echo $v->id; ?>">修改</a>
+                            |
+                            <a href="<?php echo $this->url->get('content/del'); ?>?id=<?php echo $v->id; ?>&nid=<?php echo $v->nid; ?>">删除</a>
+                        </td>
+                    </tr>
+                    <?php } ?>
+                </tbody>
+                <?php } elseif ($channel->tmpl == 5 || $channel->tmpl == 6) { ?>
+                <thead>
+                    <tr>
+                    <th>
+                        <input name="" type="checkbox" value=""  id="allcheck"/>
+                    </th>
+                        <th>编号</th>
+                        <th>样式</th>
+                        <th>地域</th>
+                        <th>排序</th>
+                        <th>状态</th>
+                        <th>操作</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <?php foreach ($page->items as $v) { ?>
+                    
+                    <tr>
+                        <td>
+                            <input name="ids[]" class="ids"  type="checkbox" value="<?php echo $v->id; ?>" />
+                        </td>
+                        <td><?php echo $v->id; ?></td>
+                        <td class="areahtml">
+                            <div><?php echo $this->escaper->escapeHtml($v->contents); ?></div>
+                        </td>
+                        <td><?php echo $v->getCities()->city; ?></td>
+                        <td><?php echo $v->ord; ?></td>
+                        <td><?php echo $status[$v->status]; ?></td>
+                        <td>
+                            <a href="<?php echo $this->url->get('content/edit'); ?>?id=<?php echo $v->id; ?>">修改</a>
+                            |
+                            <a href="<?php echo $this->url->get('content/del'); ?>?id=<?php echo $v->id; ?>&nid=<?php echo $v->nid; ?>">删除</a>
+                        </td>
+                    </tr>
+                    <?php } ?>
+                </tbody>
+                <?php } ?>
+            </table>
+            
+            <?php if ($page->total_pages > 1) { ?>
+            <div class="pagin">
+                <div class="message">
+                    共 <i class="blue"><?php echo $page->total_items; ?></i>
+                    条记录，当前显示第&nbsp; <i class="blue"><?php echo $page->total_pages; ?>&nbsp;</i>
+                    页
+                </div>
+                <ul class="paginList">
+                    <li class="paginItem">
+                        <a href="<?php echo $param; ?>page=<?php echo $page->before; ?>">
+                            <span class="pagepre"></span>
+                        </a>
+                    </li>
+                    <?php foreach (range(1, $page->total_pages) as $index) { ?>
+                    <li class="paginItem">
+                        <a href="<?php echo $param; ?>page=<?php echo $index; ?>"><?php echo $index; ?></a>
+                    </li>
+                    <?php } ?>
+                   
+                    <li class="paginItem">
+                        <a href="<?php echo $param; ?>page=<?php echo $page->next; ?>">
+                            <span class="pagenxt"></span>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+            <?php } ?>
+            
+
+        </div>
+
+        <script type="text/javascript">$('.tablelist tbody tr:odd').addClass('odd');</script>
+
+</body>
+<script>
+        $(function(){
+            var checked = true;
+            $("#allcheck").bind('click',function(){
+                // $(".ids").parent('span').toggleClass('checked');
+                $(".ids").prop('checked',checked);
+                checked = !checked;
+            })
+
+            var data = [];
+            $("#delALL").bind('click',function(){
+                $('.ids:checked').each(function(i,v){
+                    data[i] = $(v).val();
+                })
+                console.log(data);
+                $.post('<?php echo $this->url->get('content/delALL'); ?>',{ ids : data },function(data){
+                    if(data){
+                        window.location.reload();
+                    }
+                })
+            })
+        })
+    </script>
+    </html>

@@ -1,0 +1,69 @@
+<html>
+<head>
+<title>My first chart using FusionCharts Suite XT</title>
+<script type="text/javascript" src="js/fusioncharts.js"></script>
+<script type="text/javascript" src="js/themes/fusioncharts.theme.fint.js"></script>
+<script type="text/javascript">
+  FusionCharts.ready(function(){
+    var revenueChart = new FusionCharts({
+        //"type": "column2d",
+        // "type": "column3d",
+        // "type":"angulargauge",
+        "type":"pie3d",
+        "renderAt": "chartContainer",
+        "width": "500",
+        "height": "300",
+        "dataFormat": "json",
+        "dataSource":  {
+    "chart": {
+        "caption": "Age profile of website visitors",
+        "subcaption": "Last Year",
+        "startingangle": "120",
+        "showlabels": "0",
+        "showlegend": "1",
+        "enablemultislicing": "0",
+        "slicingdistance": "15",
+        "showpercentvalues": "1",
+        "showpercentintooltip": "0",
+        "plottooltext": "Age group : $labelTotal visit : $datavalue",
+        "theme": "fint"
+    },
+    "data": [
+        {
+            "label": "Teenage",
+            "value": "1250400"
+        },
+        {
+            "label": "Teenage",
+            "value": "125400"
+        },
+        {
+            "label": "Teenage",
+            "value": "1250400"
+        },
+        {
+            "label": "Adult",
+            "value": "1463300"
+        },
+        {
+            "label": "Mid-age",
+            "value": "1050700"
+        },
+        {
+            "label": "Senior",
+            "value": "491000"
+        }
+    ]
+}
+
+  });
+revenueChart.render();
+})
+</script>
+</head>
+<body>
+  <div id="chartContainer">FusionCharts XT will load here!</div>
+
+  <a href="http://www.fusioncharts.com/dev/getting-started/list-of-charts.html">type</a>
+</body>
+</html>
